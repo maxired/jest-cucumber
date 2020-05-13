@@ -9,7 +9,8 @@
     "jest": "jest --verbose",
     "test": "npm run build & npm run lint & jest --color",
     "lint": "tslint --project ./",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
