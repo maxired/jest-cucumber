@@ -114,8 +114,8 @@ const defineScenario = (
 ) => {
     const testFunction = getTestFunction(parsedScenario.skippedViaTagFilter, only, skip, concurrent);
 
-    testFunction(scenarioTitle, () => {
-        return scenarioFromStepDefinitions.steps.reduce((promiseChain, nextStep, index) => {
+    describe(scenarioTitle, () => {
+        return scenarioFromStepDefinitions.steps.forEach((nextStep, index) => {
             const stepArgument = parsedScenario.steps[index].stepArgument;
             const matches = matchSteps(
                 parsedScenario.steps[index].stepText,
@@ -129,8 +129,8 @@ const defineScenario = (
 
             const args = [...matchArgs, stepArgument];
 
-            return promiseChain.then(() => nextStep.stepFunction(...args));
-        }, Promise.resolve());
+            testFunction(`${parsedScenario.steps[index].keyword} ${parsedScenario.steps[index].stepText}`, () => nextStep.stepFunction(...args))
+        });
     });
 };
 
